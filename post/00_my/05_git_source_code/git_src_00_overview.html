@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <meta name="baidu-site-verification" content="" />
+  <meta name="google-site-verification" content="" />
+  <meta name="msvalidate.01" content="" />
+  <meta name="360-site-verification" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- if page has tags, then add tags to keyword -->
+  
+  
+  <meta name="keywords" content=",git,source code,git,source code">
+  <!-- page.description has higher priority -->
+  <meta name="description" content="WYSCJM的博客">
+  <link rel="shortcut icon" href="/img/icon.png">
+  <title>
+    
+    Git 源码分析00：简介及第一个commit | 冬天里太阳
+    
+  </title>
+
+  <link rel="canonical" href="/post/00_my/05_git_source_code/git_src_00_overview.html">
+  
+<link rel="stylesheet" href="/css/reset.css">
+
+  
+<link rel="stylesheet" href="/css/layout.css">
+
+  
+<link rel="stylesheet" href="/css/markdown.css">
+
+  <!-- Pygments Highlight CSS -->
+  
+<link rel="stylesheet" href="/css/highlight.css">
+
+  
+<link rel="stylesheet" href="/css/geektutu.css">
+
+  <!-- global function -->
+  <script>
+    window.globalAddScript = function (url, onload, onerror) {
+      var s = document.createElement('script');
+      s.src = url;
+      onload && (s.onload = onload);
+      onerror && (s.onerror = onerror);
+      document.body.appendChild(s);
+    }
+    window.globalAddCss = function (url) {
+      var s = document.createElement('link');
+      s.rel = 'stylesheet';
+      s.href = url;
+      document.body.appendChild(s);
+    }
+    window.getPosition = function (ele) {
+      var x = 0, y = 0;
+      while (ele) {
+        x += (ele.offsetLeft - ele.scrollLeft + ele.clientLeft);
+        y += (ele.offsetTop - ele.scrollTop + ele.clientTop);
+        ele = ele.offsetParent;
+      }
+      return { x: x, y: y };
+    }
+    window.getDom = function (str) { return document.querySelector(str) }
+  </script>
+  <!-- google ad -->
+  
+  <script>
+    window.addEventListener('load', function () {
+      globalAddScript("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", "", function (e) {
+        if (window.localStorage.getItem('gkt_marker')) {
+          var rec = document.querySelector('.gkt-rec-links');
+          rec && (rec.style.display = 'none');
+        }
+      });
+    });
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1324785265982253",
+      enable_page_level_ads: true
+    });
+  </script>
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <header class="gkt-header col-xs-12 padding-0">
+    <div id="gkt-nav" class="gkt-header-container">
+        <a href="/" class="gkt-header-title float-left">
+            <img class="float-left" src="/img/icon.png" alt="">
+            <span>冬天里太阳</span>
+        </a>
+        <nav class="gkt-header-nav text-right">
+            <ul>
+                <li><a class="hidden-xs" href="/">主页</a></li>
+                <li><a href="/series/">专题</a></li>
+                <li><a href="/archives/">归档</a></li>
+                <li><a href="/box/">百宝箱</a></li>
+                <li><a href="/box_me/">我的百宝箱</a></li>
+                <li><a href="/post/link.html">友链</a></li>
+                <li><a href="/post/about.html">留言</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="gkt-cate-nav" class="gkt-header-container hidden-xs">
+        
+        <nav class="gkt-header-nav float-left">
+            <ul>
+                
+                
+                <li class="gkt-cate-name float-left active">
+                    <a class="float-left" href="/post/00_my/00_my.html">MyXXX ▾</a>
+                    
+                    <ul class="gkt-sub-cate">
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/00_my.html">MyXXX简介</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/01_blog/myblog_00_introduction.html">个人博客搭建</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/02_daily/daily_00.html">日常记录</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/04_linux_tools&amp;commands/tool&amp;cmd_00_overview.html">Linux工具及命令</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/03_embeded_c++/ebc_00_overview.html">嵌入式C++学习</a></li>
+                        
+                        <li class="gkt-sub-cate-name active"><a class="float-left"
+                                href="/post/00_my/05_git_source_code/git_src_00_overview.html">git源码分析</a></li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="gkt-cate-name float-left ">
+                    <a class="float-left" href="/post/01_gd/gd_00.html">好文赏析 ▾</a>
+                    
+                    <ul class="gkt-sub-cate">
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/01_gd/gd_00.html">好文赏析系列简介</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/01_gd/gd_01.html">c&amp;c++</a></li>
+                        
+                    </ul>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+<div style="height: 44px"></div>
+<div class="hidden-xs" style="height: 44px"></div>
+<script>
+    (function () {
+        window.addEventListener('scroll', function () {
+            if (window.innerWidth < 768) {
+                return;
+            }
+            var nav = document.querySelector('#gkt-nav');
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            scrollTop > 50 && (nav.classList.add('hide'));
+            scrollTop <= 50 && (nav.classList.remove('hide'));
+        });
+        var cateNavs = document.querySelectorAll('#gkt-cate-nav>nav>ul>li');
+        [].slice.call(cateNavs).forEach(function (item) {
+            var sub = item.querySelector('.gkt-sub-cate');
+            if (!sub) return;
+            item.addEventListener('mouseenter', function (e) { sub.style.display = 'block'; }, false);
+            item.addEventListener('mouseleave', function (e) { sub.style.display = 'none'; }, false);
+        })
+    })();
+</script>
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Main Content -->
+<main class="col-xs-12 padding-0 markdown-it">
+    <!-- Post Container -->
+    
+    <!-- Post Content -->
+<div class="float-left post-container box-shadow">
+    <div class="u-arrow-wrapper hidden-xs">
+        
+        <a class="float-left" href="/post/00_my/03_embeded_c++/ebc_00_overview.html"><i class="u-arrow-left"></i></a>
+        
+        
+        <a class="float-right" href="/post/00_my/05_git_source_code/git_src_01_data_structure.html"><i class="u-arrow-right"></i></a>
+        
+    </div>
+    <article class="col-xs-12">
+        <h1> Git 源码分析00：简介及第一个commit </h1>
+
+        
+
+        
+        <div class="hidden-lg hidden-md series_links">
+            <p> <strong> git源码分析系列文章链接：</strong></p>
+            <ul>
+                
+                <li>
+                    <a href="/post/00_my/05_git_source_code/git_src_00_overview.html">Git 源码分析00：简介及第一个commit</a>
+                    <span class="post-item-date">(Mar 25, 2020)</span>
+                </li>
+                
+                <li>
+                    <a href="/post/00_my/05_git_source_code/git_src_01_data_structure.html">Git 源码分析01：数据结构</a>
+                    <span class="post-item-date">(Mar 26, 2020)</span>
+                </li>
+                
+                <li>
+                    <a href="/post/00_my/05_git_source_code/git_src_02_git_v0.99.html">Git 源码分析02：git v0.99版本代码</a>
+                    <span class="post-item-date">(Mar 27, 2020)</span>
+                </li>
+                
+            </ul>
+        </div>
+        
+        
+        
+        <p>Git 使用得越多，就越感觉有必须要学一下它，比较是大声 Linus Torvalds写的。一个人写出了linux和git，确实很让人佩服，所以就决定从第一个commit开始分析一下。</p>
+<h1 id="准备分析的思路"><a href="#准备分析的思路" class="headerlink" title="准备分析的思路"></a>准备分析的思路</h1><p>大致的思路就是着重分析从第一个commit到v1.0.0中间发生的所有的记录。</p>
+<h2 id="获取git-源码"><a href="#获取git-源码" class="headerlink" title="获取git 源码"></a>获取git 源码</h2><p>直接运行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;git&#x2F;git</span><br></pre></td></tr></table></figure>
+
+<h2 id="“梦”开始的地方"><a href="#“梦”开始的地方" class="headerlink" title="“梦”开始的地方"></a>“梦”开始的地方</h2><p>在git上能看见的第一个commit，可以看见内容就是“git的初始版本，从地狱来的信息管理器”，现在感觉信息管理就是一个地狱啊！如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">提交： e83c5163316f89bfbde7d9ab23ca2e25604af290 [e83c516]</span><br><span class="line">作者： Linus Torvalds &lt;torvalds@ppc970.osdl.org&gt;</span><br><span class="line">日期： 2005年4月7日 15:13:13</span><br><span class="line">提交者： Linus Torvalds</span><br><span class="line">Initial revision of &quot;git&quot;, the information manager from hell</span><br></pre></td></tr></table></figure>
+<p>直接运行checkout命令就可以下载下来了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout e83c5163316f89bfbde7d9ab23ca2e25604af290</span><br></pre></td></tr></table></figure>
+
+<p>具体内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-rw-r--r-- 1 ww 197121 2484 3月  24 15:35 cache.h</span><br><span class="line">-rw-r--r-- 1 ww 197121  503 3月  24 15:35 cat-file.c</span><br><span class="line">-rw-r--r-- 1 ww 197121 4103 3月  24 15:35 commit-tree.c</span><br><span class="line">-rw-r--r-- 1 ww 197121 1198 3月  24 15:35 init-db.c</span><br><span class="line">-rw-r--r-- 1 ww 197121  957 3月  24 15:35 Makefile</span><br><span class="line">-rw-r--r-- 1 ww 197121 5681 3月  24 15:35 read-cache.c</span><br><span class="line">-rw-r--r-- 1 ww 197121 8392 3月  24 15:35 README</span><br><span class="line">-rw-r--r-- 1 ww 197121  986 3月  24 15:35 read-tree.c</span><br><span class="line">-rw-r--r-- 1 ww 197121 2034 3月  24 15:35 show-diff.c</span><br><span class="line">-rw-r--r-- 1 ww 197121 5395 3月  24 15:35 update-cache.c</span><br><span class="line">-rw-r--r-- 1 ww 197121 1441 3月  24 15:35 write-tree.c</span><br></pre></td></tr></table></figure>
+
+<h3 id="makefile"><a href="#makefile" class="headerlink" title="makefile"></a>makefile</h3><p>可以通过makefile看出来,此时生成的可执行的程序为update-cache show-diff init-db write-tree read-tree commit-tree cat-file。所以我们下面就需要分析一下这些命令及其构成。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS=-g</span><br><span class="line">CC=gcc</span><br><span class="line"></span><br><span class="line">PROG=update-cache show-diff init-db write-tree read-tree commit-tree cat-file</span><br><span class="line"></span><br><span class="line"><span class="section">all: <span class="variable">$(PROG)</span></span></span><br><span class="line"></span><br><span class="line"><span class="section">install: <span class="variable">$(PROG)</span></span></span><br><span class="line">	install <span class="variable">$(PROG)</span> <span class="variable">$(HOME)</span>/bin/</span><br><span class="line"></span><br><span class="line">LIBS= -lssl</span><br><span class="line"></span><br><span class="line"><span class="section">init-db: init-db.o</span></span><br><span class="line"></span><br><span class="line"><span class="section">update-cache: update-cache.o read-cache.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -o update-cache update-cache.o read-cache.o <span class="variable">$(LIBS)</span></span><br><span class="line"></span><br><span class="line"><span class="section">show-diff: show-diff.o read-cache.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -o show-diff show-diff.o read-cache.o <span class="variable">$(LIBS)</span></span><br><span class="line"></span><br><span class="line"><span class="section">write-tree: write-tree.o read-cache.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -o write-tree write-tree.o read-cache.o <span class="variable">$(LIBS)</span></span><br><span class="line"></span><br><span class="line"><span class="section">read-tree: read-tree.o read-cache.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -o read-tree read-tree.o read-cache.o <span class="variable">$(LIBS)</span></span><br><span class="line"></span><br><span class="line"><span class="section">commit-tree: commit-tree.o read-cache.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -o commit-tree commit-tree.o read-cache.o <span class="variable">$(LIBS)</span></span><br><span class="line"></span><br><span class="line"><span class="section">cat-file: cat-file.o read-cache.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -o cat-file cat-file.o read-cache.o <span class="variable">$(LIBS)</span></span><br><span class="line"></span><br><span class="line"><span class="section">read-cache.o: cache.h</span></span><br><span class="line"><span class="section">show-diff.o: cache.h</span></span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f *.o <span class="variable">$(PROG)</span> temp_git_file_*</span><br><span class="line"></span><br><span class="line"><span class="section">backup: clean</span></span><br><span class="line">	cd .. ; tar czvf dircache.tar.gz dir-cache</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><h3 id="问题：undefined-reference-to-symbol-39-SHA1-Init-libcrypto-so-10-39"><a href="#问题：undefined-reference-to-symbol-39-SHA1-Init-libcrypto-so-10-39" class="headerlink" title="问题：undefined reference to symbol &#39;SHA1_Init@@libcrypto.so.10&#39;"></a>问题：undefined reference to symbol &#39;SHA1_Init@@libcrypto.so.10&#39;</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gcc -g -o update-cache update-cache.o read-cache.o -lssl -L&#x2F;usr&#x2F;lib64</span><br><span class="line">&#x2F;usr&#x2F;bin&#x2F;ld: update-cache.o: undefined reference to symbol &#39;SHA1_Init@@libcrypto.so.10&#39;</span><br><span class="line">&#x2F;&#x2F;usr&#x2F;lib64&#x2F;libcrypto.so.10: error adding symbols: DSO missing from command line</span><br><span class="line">collect2: error: ld returned 1 exit status</span><br><span class="line">make: *** [update-cache] Error 1</span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">由于自己电脑上重新装了一个openssl导致出了问题</span><br><span class="line">&gt;参考https:&#x2F;&#x2F;bbs.csdn.net&#x2F;topics&#x2F;391984119?list&#x3D;lz</span><br><span class="line">&gt;首先你系统中有一套标准的openssl库，但是你现在要连接自己指定路径下的openssl库，这两者产生了冲突</span><br><span class="line">&gt;&#96;&#96;&#96; C&#x2F;C++ code</span><br><span class="line">&gt;LIBS:&#x3D; -L&#x2F;usr&#x2F;local&#x2F;openssl&#x2F;lib -lssl \</span><br><span class="line">&gt;        -L&#x2F;usr&#x2F;local&#x2F;openssl&#x2F;lib -lcrypt \</span><br><span class="line">&gt;        -L&#x2F;usr&#x2F;lib64 -lssl \</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>你链接了2个ssl。<br>如果你要使用系统自带的openssl 就直接 -lssl -lcrypt就OK了，<br>如果要使用自己指定路径下的，就把 libssl.a 和 libcrpt.a改个名字再链接，防止冲突。</p>
+</blockquote>
+<p>然后修改了下自己的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-LIBS&#x3D; -lssl</span><br><span class="line">+LIBS&#x3D;-L&#x2F;usr&#x2F;local&#x2F;openssl&#x2F;lib  -lssl_j -lcrypto_j</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译找不到zlib-h的解决办法"><a href="#编译找不到zlib-h的解决办法" class="headerlink" title="编译找不到zlib.h的解决办法"></a>编译找不到zlib.h的解决办法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">gcc -g -o update-cache update-cache.o read-cache.o -L&#x2F;usr&#x2F;local&#x2F;openssl&#x2F;lib  -lssl_j -lcrypto_j</span><br><span class="line">update-cache.o: In function &#96;index_fd&#39;:</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;update-cache.c:90: undefined reference to &#96;deflateInit_&#39;</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;update-cache.c:99: undefined reference to &#96;deflate&#39;</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;update-cache.c:107: undefined reference to &#96;deflate&#39;</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;update-cache.c:110: undefined reference to &#96;deflateEnd&#39;</span><br><span class="line">read-cache.o: In function &#96;read_sha1_file&#39;:</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;read-cache.c:112: undefined reference to &#96;inflateInit_&#39;</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;read-cache.c:113: undefined reference to &#96;inflate&#39;</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;read-cache.c:126: undefined reference to &#96;inflate&#39;</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;read-cache.c:129: undefined reference to &#96;inflateEnd&#39;</span><br><span class="line">read-cache.o: In function &#96;write_sha1_file&#39;:</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;read-cache.c:143: undefined reference to &#96;deflateInit_&#39;</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;read-cache.c:144: undefined reference to &#96;deflateBound&#39;</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;read-cache.c:152: undefined reference to &#96;deflate&#39;</span><br><span class="line">&#x2F;root&#x2F;for_git&#x2F;git&#x2F;read-cache.c:154: undefined reference to &#96;deflateEnd&#39;</span><br><span class="line">collect2: error: ld returned 1 exit status</span><br><span class="line">make: *** [update-cache] Error 1</span><br></pre></td></tr></table></figure>
+
+<p>失败参考 <a href="https://ask.csdn.net/questions/752062" target="_blank" rel="noopener">https://ask.csdn.net/questions/752062</a> </p>
+<blockquote>
+<p>可以先搜索下zlib.h在哪个目录下，然后再makefile文件里面添加这个路径，搜索zlib.h可以使用这个命令：<br>find / -name zlib.h<br>文件不要到处乱拷贝。 修改Makefile， 添加 -I 来增加头文件搜索目录。</p>
+</blockquote>
+<p>成功参考 <a href="https://blog.csdn.net/chameleons/article/details/36174591?utm_source=blogxgwz0" target="_blank" rel="noopener">https://blog.csdn.net/chameleons/article/details/36174591?utm_source=blogxgwz0</a> </p>
+<blockquote>
+<p>android NDK编译工程出现以下错误：</p>
+<p>undefined reference to &#39;inflate&#39;</p>
+<p>undefined reference to &#39;inflateEnd&#39;</p>
+<p>undefined reference to &#39;inflateInit_&#39;</p>
+<p>undefined reference to &#39;inflateReset&#39;</p>
+<p>原因：这些都是libz.so库中的函数，程序没有导入libz动态库</p>
+<p>解决方法：在Android.mk中加入</p>
+<p>LOCAL_LDLIBS += -lz</p>
+</blockquote>
+<h3 id="编译成功"><a href="#编译成功" class="headerlink" title="编译成功"></a>编译成功</h3><p>现在makefile的不同如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-LIBS&#x3D; -lssl</span><br><span class="line">+LIBS&#x3D;-L&#x2F;usr&#x2F;local&#x2F;openssl&#x2F;lib  -lssl_j -lcrypto_j -lz</span><br></pre></td></tr></table></figure>
+<p>如此这般make就成功了。<br>发现编译出来了，现在不知道该怎么用了！那么还是看看程序吧</p>
+<h1 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h1><p>简单的阅读一下几个生成程序的功能</p>
+<h1 id="update-cache"><a href="#update-cache" class="headerlink" title="update-cache"></a>update-cache</h1><p>参考<a href="https://blog.csdn.net/azurelaker/article/details/81675175" target="_blank" rel="noopener">https://blog.csdn.net/azurelaker/article/details/81675175</a></p>
+<h2 id="update-cache-主程序"><a href="#update-cache-主程序" class="headerlink" title="update-cache 主程序"></a>update-cache 主程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	int i, newfd, entries;</span><br><span class="line"></span><br><span class="line">	entries &#x3D; read_cache();</span><br><span class="line">	if (entries &lt; 0) &#123;</span><br><span class="line">		perror(&quot;cache corrupted&quot;);</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	newfd &#x3D; open(&quot;.dircache&#x2F;index.lock&quot;, O_RDWR | O_CREAT | O_EXCL, 0600);</span><br><span class="line">	if (newfd &lt; 0) &#123;</span><br><span class="line">		perror(&quot;unable to create new cachefile&quot;);</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">	for (i &#x3D; 1 ; i &lt; argc; i++) &#123;</span><br><span class="line">		char *path &#x3D; argv[i];</span><br><span class="line">		if (!verify_path(path)) &#123;</span><br><span class="line">			fprintf(stderr, &quot;Ignoring path %s\n&quot;, argv[i]);</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line">		if (add_file_to_cache(path)) &#123;</span><br><span class="line">			fprintf(stderr, &quot;Unable to add %s to database\n&quot;, path);</span><br><span class="line">			goto out;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	if (!write_cache(newfd, active_cache, active_nr) &amp;&amp; !rename(&quot;.dircache&#x2F;index.lock&quot;, &quot;.dircache&#x2F;index&quot;))</span><br><span class="line">		return 0;</span><br><span class="line">out:</span><br><span class="line">	unlink(&quot;.dircache&#x2F;index.lock&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="readcache-分析"><a href="#readcache-分析" class="headerlink" title="readcache 分析"></a>readcache 分析</h2><p>所以需要从readcache开始</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">const char *sha1_file_directory &#x3D; NULL;</span><br><span class="line">struct cache_entry **active_cache &#x3D; NULL;</span><br><span class="line">unsigned int active_nr &#x3D; 0, active_alloc &#x3D; 0;</span><br><span class="line">int read_cache(void)</span><br><span class="line">&#123;</span><br><span class="line">	int fd, i;</span><br><span class="line">	struct stat st;</span><br><span class="line">	unsigned long size, offset;</span><br><span class="line">	void *map;</span><br><span class="line">	struct cache_header *hdr;</span><br><span class="line"></span><br><span class="line">	errno &#x3D; EBUSY;</span><br><span class="line">	if (active_cache)</span><br><span class="line">		return error(&quot;more than one cachefile&quot;);</span><br><span class="line">	errno &#x3D; ENOENT;</span><br><span class="line">	sha1_file_directory &#x3D; getenv(DB_ENVIRONMENT);</span><br><span class="line">	if (!sha1_file_directory)</span><br><span class="line">		sha1_file_directory &#x3D; DEFAULT_DB_ENVIRONMENT;</span><br><span class="line">	if (access(sha1_file_directory, X_OK) &lt; 0)</span><br><span class="line">		return error(&quot;no access to SHA1 file directory&quot;);</span><br><span class="line">	fd &#x3D; open(&quot;.dircache&#x2F;index&quot;, O_RDONLY);</span><br><span class="line">	if (fd &lt; 0)</span><br><span class="line">		return (errno &#x3D;&#x3D; ENOENT) ? 0 : error(&quot;open failed&quot;);</span><br><span class="line"></span><br><span class="line">	map &#x3D; (void *)-1;</span><br><span class="line">	if (!fstat(fd, &amp;st)) &#123;</span><br><span class="line">		map &#x3D; NULL;</span><br><span class="line">		size &#x3D; st.st_size;</span><br><span class="line">		errno &#x3D; EINVAL;</span><br><span class="line">		if (size &gt; sizeof(struct cache_header))</span><br><span class="line">			map &#x3D; mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);</span><br><span class="line">	&#125;</span><br><span class="line">	close(fd);</span><br><span class="line">	if (-1 &#x3D;&#x3D; (int)(long)map)</span><br><span class="line">		return error(&quot;mmap failed&quot;);</span><br><span class="line"></span><br><span class="line">	hdr &#x3D; map;</span><br><span class="line">	if (verify_hdr(hdr, size) &lt; 0)</span><br><span class="line">		goto unmap;</span><br><span class="line"></span><br><span class="line">	active_nr &#x3D; hdr-&gt;entries;</span><br><span class="line">	active_alloc &#x3D; alloc_nr(active_nr);</span><br><span class="line">	active_cache &#x3D; calloc(active_alloc, sizeof(struct cache_entry *));</span><br><span class="line"></span><br><span class="line">	offset &#x3D; sizeof(*hdr);</span><br><span class="line">	for (i &#x3D; 0; i &lt; hdr-&gt;entries; i++) &#123;</span><br><span class="line">		struct cache_entry *ce &#x3D; map + offset;</span><br><span class="line">		offset &#x3D; offset + ce_size(ce);</span><br><span class="line">		active_cache[i] &#x3D; ce;</span><br><span class="line">	&#125;</span><br><span class="line">	return active_nr;</span><br><span class="line"></span><br><span class="line">unmap:</span><br><span class="line">	munmap(map, size);</span><br><span class="line">	errno &#x3D; EINVAL;</span><br><span class="line">	return error(&quot;verify header failed&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看见显示读取cache. 通过阅读readcache发现，这个步骤的时候，需要的是未激活的cache，然后还能看见cache存放在文件.dircache/index里面,所以cache就是从.dircache/index读取出来，然后使用namp将文件的所有内容映射到内容中，然后map作为入口，然后将cache的全局变量初始化一遍active_cache、active_nr、active_alloc，就获得了所有的cache的内容了。通过这个也能大概了解cache的数据结构了</p>
+<p>一个cache_header里包含了entries个cache_entry;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct cache_header &#123;</span><br><span class="line">	unsigned int signature;</span><br><span class="line">	unsigned int version;</span><br><span class="line">	unsigned int entries;</span><br><span class="line">	unsigned char sha1[20];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>每个cache_entry机构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line"> * dev&#x2F;ino&#x2F;uid&#x2F;gid&#x2F;size are also just tracked to the low 32 bits</span><br><span class="line"> * Again - this is just a (very strong in practice) heuristic that</span><br><span class="line"> * the inode hasn&#39;t changed.</span><br><span class="line"> *&#x2F;</span><br><span class="line">struct cache_entry &#123;</span><br><span class="line">	struct cache_time ctime;</span><br><span class="line">	struct cache_time mtime;</span><br><span class="line">	unsigned int st_dev;</span><br><span class="line">	unsigned int st_ino;</span><br><span class="line">	unsigned int st_mode;</span><br><span class="line">	unsigned int st_uid;</span><br><span class="line">	unsigned int st_gid;</span><br><span class="line">	unsigned int st_size;</span><br><span class="line">	unsigned char sha1[20];</span><br><span class="line">	unsigned short namelen;</span><br><span class="line">	unsigned char name[0];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="屏蔽冲突"><a href="#屏蔽冲突" class="headerlink" title="屏蔽冲突"></a>屏蔽冲突</h2><p>使用.dircache/index.lock来锁定每次只能有一个写入动作</p>
+<h2 id="写入cache"><a href="#写入cache" class="headerlink" title="写入cache"></a>写入cache</h2><p>首先会检查文件路径是否合法，然后就会添加文件到内存空间去，最后就是写入到文件里到.dircache/index.lock里去，并重新命名为.dircache/index</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这里就明白了，这个文件就是保存所有当期追踪文件的，保存着所有当前文件的sha1号。最新的这个update-cache已经改成了update-index了，其实就是缓冲区的概念。可以看看<a href="https://blog.csdn.net/zssureqh/article/details/53056095" target="_blank" rel="noopener">https://blog.csdn.net/zssureqh/article/details/53056095</a>  说的蛮好的，有个图也蛮好的<br><img src="./git_src_00_overview/git_wrokflow_index.png" alt="git关于index的示意图"></p>
+<h1 id="show-diff"><a href="#show-diff" class="headerlink" title="show-diff"></a>show-diff</h1><h2 id="主程序"><a href="#主程序" class="headerlink" title="主程序"></a>主程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	int entries &#x3D; read_cache();</span><br><span class="line">	int i;</span><br><span class="line"></span><br><span class="line">	if (entries &lt; 0) &#123;</span><br><span class="line">		perror(&quot;read_cache&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	for (i &#x3D; 0; i &lt; entries; i++) &#123;</span><br><span class="line">		struct stat st;</span><br><span class="line">		struct cache_entry *ce &#x3D; active_cache[i];</span><br><span class="line">		int n, changed;</span><br><span class="line">		unsigned int mode;</span><br><span class="line">		unsigned long size;</span><br><span class="line">		char type[20];</span><br><span class="line">		void *new;</span><br><span class="line"></span><br><span class="line">		if (stat(ce-&gt;name, &amp;st) &lt; 0) &#123;</span><br><span class="line">			printf(&quot;%s: %s\n&quot;, ce-&gt;name, strerror(errno));</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line">		changed &#x3D; match_stat(ce, &amp;st);</span><br><span class="line">		if (!changed) &#123;</span><br><span class="line">			printf(&quot;%s: ok\n&quot;, ce-&gt;name);</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;%.*s:  &quot;, ce-&gt;namelen, ce-&gt;name);</span><br><span class="line">		for (n &#x3D; 0; n &lt; 20; n++)</span><br><span class="line">			printf(&quot;%02x&quot;, ce-&gt;sha1[n]);</span><br><span class="line">		printf(&quot;\n&quot;);</span><br><span class="line">		new &#x3D; read_sha1_file(ce-&gt;sha1, type, &amp;size);</span><br><span class="line">		show_differences(ce, &amp;st, new, size);</span><br><span class="line">		free(new);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>了解完上面一个下面这个就容易多了。同样的先读取cache的内容，然后开始循环遍历所有的cache_entry,查看对应的文件状态有没有错误，然后查看文件是否有改动，检查的内容比较多，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">static int match_stat(struct cache_entry *ce, struct stat *st)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int changed &#x3D; 0;</span><br><span class="line"></span><br><span class="line">	if (ce-&gt;mtime.sec  !&#x3D; (unsigned int)st-&gt;st_mtim.tv_sec ||</span><br><span class="line">	    ce-&gt;mtime.nsec !&#x3D; (unsigned int)st-&gt;st_mtim.tv_nsec)</span><br><span class="line">		changed |&#x3D; MTIME_CHANGED;</span><br><span class="line">	if (ce-&gt;ctime.sec  !&#x3D; (unsigned int)st-&gt;st_ctim.tv_sec ||</span><br><span class="line">	    ce-&gt;ctime.nsec !&#x3D; (unsigned int)st-&gt;st_ctim.tv_nsec)</span><br><span class="line">		changed |&#x3D; CTIME_CHANGED;</span><br><span class="line">	if (ce-&gt;st_uid !&#x3D; (unsigned int)st-&gt;st_uid ||</span><br><span class="line">	    ce-&gt;st_gid !&#x3D; (unsigned int)st-&gt;st_gid)</span><br><span class="line">		changed |&#x3D; OWNER_CHANGED;</span><br><span class="line">	if (ce-&gt;st_mode !&#x3D; (unsigned int)st-&gt;st_mode)</span><br><span class="line">		changed |&#x3D; MODE_CHANGED;</span><br><span class="line">	if (ce-&gt;st_dev !&#x3D; (unsigned int)st-&gt;st_dev ||</span><br><span class="line">	    ce-&gt;st_ino !&#x3D; (unsigned int)st-&gt;st_ino)</span><br><span class="line">		changed |&#x3D; INODE_CHANGED;</span><br><span class="line">	if (ce-&gt;st_size !&#x3D; (unsigned int)st-&gt;st_size)</span><br><span class="line">		changed |&#x3D; DATA_CHANGED;</span><br><span class="line">	return changed;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果文件有改动，那么就将对应sha1号里的内容读出来，然后和当前文件进行比较就行了。</p>
+<h1 id="init-db"><a href="#init-db" class="headerlink" title="init-db"></a>init-db</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	char *sha1_dir &#x3D; getenv(DB_ENVIRONMENT), *path;</span><br><span class="line">	int len, i, fd;</span><br><span class="line"></span><br><span class="line">	if (mkdir(&quot;.dircache&quot;, 0700) &lt; 0) &#123;</span><br><span class="line">		perror(&quot;unable to create .dircache&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;*</span><br><span class="line">	 * If you want to, you can share the DB area with any number of branches.</span><br><span class="line">	 * That has advantages: you can save space by sharing all the SHA1 objects.</span><br><span class="line">	 * On the other hand, it might just make lookup slower and messier. You</span><br><span class="line">	 * be the judge.</span><br><span class="line">	 *&#x2F;</span><br><span class="line">	sha1_dir &#x3D; getenv(DB_ENVIRONMENT);</span><br><span class="line">	if (sha1_dir) &#123;</span><br><span class="line">		struct stat st;</span><br><span class="line">		if (!stat(sha1_dir, &amp;st) &lt; 0 &amp;&amp; S_ISDIR(st.st_mode))</span><br><span class="line">			return;</span><br><span class="line">		fprintf(stderr, &quot;DB_ENVIRONMENT set to bad directory %s: &quot;, sha1_dir);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;*</span><br><span class="line">	 * The default case is to have a DB per managed directory. </span><br><span class="line">	 *&#x2F;</span><br><span class="line">	sha1_dir &#x3D; DEFAULT_DB_ENVIRONMENT;</span><br><span class="line">	fprintf(stderr, &quot;defaulting to private storage area\n&quot;);</span><br><span class="line">	len &#x3D; strlen(sha1_dir);</span><br><span class="line">	if (mkdir(sha1_dir, 0700) &lt; 0) &#123;</span><br><span class="line">		if (errno !&#x3D; EEXIST) &#123;</span><br><span class="line">			perror(sha1_dir);</span><br><span class="line">			exit(1);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	path &#x3D; malloc(len + 40);</span><br><span class="line">	memcpy(path, sha1_dir, len);</span><br><span class="line">	for (i &#x3D; 0; i &lt; 256; i++) &#123;</span><br><span class="line">		sprintf(path+len, &quot;&#x2F;%02x&quot;, i);</span><br><span class="line">		if (mkdir(path, 0700) &lt; 0) &#123;</span><br><span class="line">			if (errno !&#x3D; EEXIST) &#123;</span><br><span class="line">				perror(path);</span><br><span class="line">				exit(1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个就是初始化数据库的意思。主要内容就是创建文件夹.dircache,应该就是以后的git init这个命令的功能了</p>
+<p>···</p>
+<h1 id="write-tree-read-tree-commit-tree"><a href="#write-tree-read-tree-commit-tree" class="headerlink" title="write-tree read-tree commit-tree"></a>write-tree read-tree commit-tree</h1><h2 id="write-tree-read-tree"><a href="#write-tree-read-tree" class="headerlink" title="write-tree read-tree"></a>write-tree read-tree</h2><p>这个两个其实可以一起说，第一个commit的时候，主要功能在write-tree这里，这里的tree其实就是保存了所有的文件树的信息，write_tree作用将读取的active_cache的多个文件归并到一个类型为tree的sha1文件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned long size, offset, val;</span><br><span class="line">	int i, entries &#x3D; read_cache();</span><br><span class="line">	char *buffer;</span><br><span class="line"></span><br><span class="line">	if (entries &lt;&#x3D; 0) &#123;</span><br><span class="line">		fprintf(stderr, &quot;No file-cache to create a tree of\n&quot;);</span><br><span class="line">		exit(1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* Guess at an initial size *&#x2F;</span><br><span class="line">	size &#x3D; entries * 40 + 400;</span><br><span class="line">	buffer &#x3D; malloc(size);</span><br><span class="line">	offset &#x3D; ORIG_OFFSET;</span><br><span class="line"></span><br><span class="line">	for (i &#x3D; 0; i &lt; entries; i++) &#123;</span><br><span class="line">		struct cache_entry *ce &#x3D; active_cache[i];</span><br><span class="line">		if (check_valid_sha1(ce-&gt;sha1) &lt; 0)</span><br><span class="line">			exit(1);</span><br><span class="line">		if (offset + ce-&gt;namelen + 60 &gt; size) &#123;</span><br><span class="line">			size &#x3D; alloc_nr(offset + ce-&gt;namelen + 60);</span><br><span class="line">			buffer &#x3D; realloc(buffer, size);</span><br><span class="line">		&#125;</span><br><span class="line">		offset +&#x3D; sprintf(buffer + offset, &quot;%o %s&quot;, ce-&gt;st_mode, ce-&gt;name);</span><br><span class="line">		buffer[offset++] &#x3D; 0;</span><br><span class="line">		memcpy(buffer + offset, ce-&gt;sha1, 20);</span><br><span class="line">		offset +&#x3D; 20;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	i &#x3D; prepend_integer(buffer, offset - ORIG_OFFSET, ORIG_OFFSET);</span><br><span class="line">	i -&#x3D; 5;</span><br><span class="line">	memcpy(buffer+i, &quot;tree &quot;, 5);</span><br><span class="line"></span><br><span class="line">	buffer +&#x3D; i;</span><br><span class="line">	offset -&#x3D; i;</span><br><span class="line"></span><br><span class="line">	write_sha1_file(buffer, offset);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="commit-tree"><a href="#commit-tree" class="headerlink" title="commit-tree"></a>commit-tree</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	int i, len;</span><br><span class="line">	int parents &#x3D; 0;</span><br><span class="line">	unsigned char tree_sha1[20];</span><br><span class="line">	unsigned char parent_sha1[MAXPARENT][20];</span><br><span class="line">	char *gecos, *realgecos;</span><br><span class="line">	char *email, realemail[1000];</span><br><span class="line">	char *date, *realdate;</span><br><span class="line">	char comment[1000];</span><br><span class="line">	struct passwd *pw;</span><br><span class="line">	time_t now;</span><br><span class="line">	char *buffer;</span><br><span class="line">	unsigned int size;</span><br><span class="line"></span><br><span class="line">	if (argc &lt; 2 || get_sha1_hex(argv[1], tree_sha1) &lt; 0)</span><br><span class="line">		usage(&quot;commit-tree &lt;sha1&gt; [-p &lt;sha1&gt;]* &lt; changelog&quot;);</span><br><span class="line"></span><br><span class="line">	for (i &#x3D; 2; i &lt; argc; i +&#x3D; 2) &#123;</span><br><span class="line">		char *a, *b;</span><br><span class="line">		a &#x3D; argv[i]; b &#x3D; argv[i+1];</span><br><span class="line">		if (!b || strcmp(a, &quot;-p&quot;) || get_sha1_hex(b, parent_sha1[parents]))</span><br><span class="line">			usage(&quot;commit-tree &lt;sha1&gt; [-p &lt;sha1&gt;]* &lt; changelog&quot;);</span><br><span class="line">		parents++;</span><br><span class="line">	&#125;</span><br><span class="line">	if (!parents)</span><br><span class="line">		fprintf(stderr, &quot;Committing initial tree %s\n&quot;, argv[1]);</span><br><span class="line">	pw &#x3D; getpwuid(getuid());</span><br><span class="line">	if (!pw)</span><br><span class="line">		usage(&quot;You don&#39;t exist. Go away!&quot;);</span><br><span class="line">	realgecos &#x3D; pw-&gt;pw_gecos;</span><br><span class="line">	len &#x3D; strlen(pw-&gt;pw_name);</span><br><span class="line">	memcpy(realemail, pw-&gt;pw_name, len);</span><br><span class="line">	realemail[len] &#x3D; &#39;@&#39;;</span><br><span class="line">	gethostname(realemail+len+1, sizeof(realemail)-len-1);</span><br><span class="line">	time(&amp;now);</span><br><span class="line">	realdate &#x3D; ctime(&amp;now);</span><br><span class="line"></span><br><span class="line">	gecos &#x3D; getenv(&quot;COMMITTER_NAME&quot;) ? : realgecos;</span><br><span class="line">	email &#x3D; getenv(&quot;COMMITTER_EMAIL&quot;) ? : realemail;</span><br><span class="line">	date &#x3D; getenv(&quot;COMMITTER_DATE&quot;) ? : realdate;</span><br><span class="line"></span><br><span class="line">	remove_special(gecos); remove_special(realgecos);</span><br><span class="line">	remove_special(email); remove_special(realemail);</span><br><span class="line">	remove_special(date); remove_special(realdate);</span><br><span class="line"></span><br><span class="line">	init_buffer(&amp;buffer, &amp;size);</span><br><span class="line">	add_buffer(&amp;buffer, &amp;size, &quot;tree %s\n&quot;, sha1_to_hex(tree_sha1));</span><br><span class="line"></span><br><span class="line">	&#x2F;*</span><br><span class="line">	 * NOTE! This ordering means that the same exact tree merged with a</span><br><span class="line">	 * different order of parents will be a _different_ changeset even</span><br><span class="line">	 * if everything else stays the same.</span><br><span class="line">	 *&#x2F;</span><br><span class="line">	for (i &#x3D; 0; i &lt; parents; i++)</span><br><span class="line">		add_buffer(&amp;buffer, &amp;size, &quot;parent %s\n&quot;, sha1_to_hex(parent_sha1[i]));</span><br><span class="line"></span><br><span class="line">	&#x2F;* Person&#x2F;date information *&#x2F;</span><br><span class="line">	add_buffer(&amp;buffer, &amp;size, &quot;author %s &lt;%s&gt; %s\n&quot;, gecos, email, date);</span><br><span class="line">	add_buffer(&amp;buffer, &amp;size, &quot;committer %s &lt;%s&gt; %s\n\n&quot;, realgecos, realemail, realdate);</span><br><span class="line"></span><br><span class="line">	&#x2F;* And add the comment *&#x2F;</span><br><span class="line">	while (fgets(comment, sizeof(comment), stdin) !&#x3D; NULL)</span><br><span class="line">		add_buffer(&amp;buffer, &amp;size, &quot;%s&quot;, comment);</span><br><span class="line"></span><br><span class="line">	finish_buffer(&quot;commit &quot;, &amp;buffer, &amp;size);</span><br><span class="line"></span><br><span class="line">	write_sha1_file(buffer, size);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>这个文档就说的不错 <a href="https://www.jianshu.com/p/8659c9ae00cb" target="_blank" rel="noopener">https://www.jianshu.com/p/8659c9ae00cb</a><br><img src="./git_src_00_overview/git_blob_tree_commit.png" alt="git关于index的示意图"><br>可以看出来，tree里面就是存储了所有对应的blob文件，而每个commit都会有一个对应的tree。</p>
+<h1 id="cat-file"><a href="#cat-file" class="headerlink" title="cat-file"></a>cat-file</h1><p>这个功能就是读取对应sha1_hex的文件内容并显示的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;cache.h&quot;</span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned char sha1[20];</span><br><span class="line">	char type[20];</span><br><span class="line">	void *buf;</span><br><span class="line">	unsigned long size;</span><br><span class="line">	char template[] &#x3D; &quot;temp_git_file_XXXXXX&quot;;</span><br><span class="line">	int fd;</span><br><span class="line"></span><br><span class="line">	if (argc !&#x3D; 2 || get_sha1_hex(argv[1], sha1))</span><br><span class="line">		usage(&quot;cat-file: cat-file &lt;sha1&gt;&quot;);</span><br><span class="line">	buf &#x3D; read_sha1_file(sha1, type, &amp;size);</span><br><span class="line">	if (!buf)</span><br><span class="line">		exit(1);</span><br><span class="line">	fd &#x3D; mkstemp(template);</span><br><span class="line">	if (fd &lt; 0)</span><br><span class="line">		usage(&quot;unable to create tempfile&quot;);</span><br><span class="line">	if (write(fd, buf, size) !&#x3D; size)</span><br><span class="line">		strcpy(type, &quot;bad&quot;);</span><br><span class="line">	printf(&quot;%s: %s\n&quot;, template, type);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="一些参考链接"><a href="#一些参考链接" class="headerlink" title="一些参考链接"></a>一些参考链接</h1><p><a href="http://fabiensanglard.net/git_code_review/index.php" target="_blank" rel="noopener">GIT SOURCE CODE REVIEW: OVERVIEW</a><br><a href="http://aosabook.org/en/git.html" target="_blank" rel="noopener">http://aosabook.org/en/git.html</a></p>
+
+        
+<script src="/js/qrious.min.js"></script>
+
+
+        <hr>
+        <div>
+            
+            <p>
+                <span>专题: </span>
+                
+                <a href="/series/#git源码分析">
+                    <code key="git源码分析" class="post-label">git源码分析</code>
+                </a>
+                
+            </p>
+            
+            <p>
+                <span>本文发表于 2020-03-25，最后修改于 2020-03-27。</span>
+            </p>
+            <!-- 文章末尾的提示 start -->
+            
+            
+            
+                
+            <!-- 文章末尾的提示 end -->
+        </div>
+        <hr />
+        <p name="pagination" style="font-size: 1.2em">
+    
+    <a class="float-left" href="/post/00_my/03_embeded_c++/ebc_00_overview.html">上一篇 « 嵌入式C++学习 简介</a>
+    
+    
+    <a class="float-right" href="/post/00_my/05_git_source_code/git_src_01_data_structure.html">下一篇 » Git 源码分析01：数据结构</a>
+    
+</p>
+    </article>
+
+
+	<div class="col-xs-12" >
+		<div class="spliter_color">
+			<p>
+		</div>
+	</div>
+	<!-- 赞赏 -->
+    <!--打赏-->
+
+    <!-- 推荐阅读三篇文章 -->
+    <div class="col-xs-12" >
+        <h3>推荐阅读</h3>
+        
+        <div class="post-preview">
+    <div class="post-img" style="background-image: url('/post/00_my/05_git_source_code/git_src_00_overview/00.png')"></div>
+    <div class="post-info">
+        <div class="post-info-center">
+            <div class="hidden-xs">
+                
+                
+                <span>/</span>
+                
+                <a class="text-gray" href="/tags/#git"
+                    title="git">git</a>
+                <span>/</span>
+                
+                <a class="text-gray" href="/tags/#source code"
+                    title="source code">source code</a>
+                <span>/</span>
+                
+                <a class="text-gray" href="/tags/#data structure"
+                    title="data structure">data structure</a>
+                <span>/</span>
+                
+                <a class="text-gray" href="/tags/#数据结构"
+                    title="数据结构">数据结构</a>
+                <span>/</span>
+                
+                
+            </div>
+            <a href="/post/00_my/05_git_source_code/git_src_01_data_structure.html" class="title">
+                Git 源码分析01：数据结构
+            </a>
+            <p class="text-gray">
+                <small>
+                    <span>发表于2020-03-26，</span>
+                    <span class="hidden-xs">全文14476字，</span>
+                    <span>阅读约49分钟</span>
+                </small>
+            </p>
+        </div>
+    </div>
+</div>
+        
+        <div class="post-preview">
+    <div class="post-img" style="background-image: url('/post/00_my/05_git_source_code/git_src_00_overview/00.png')"></div>
+    <div class="post-info">
+        <div class="post-info-center">
+            <div class="hidden-xs">
+                
+                
+                <span>/</span>
+                
+                <a class="text-gray" href="/tags/#git"
+                    title="git">git</a>
+                <span>/</span>
+                
+                <a class="text-gray" href="/tags/#source code"
+                    title="source code">source code</a>
+                <span>/</span>
+                
+                
+            </div>
+            <a href="/post/00_my/05_git_source_code/git_src_00_overview.html" class="title">
+                Git 源码分析00：简介及第一个commit
+            </a>
+            <p class="text-gray">
+                <small>
+                    <span>发表于2020-03-25，</span>
+                    <span class="hidden-xs">全文15897字，</span>
+                    <span>阅读约53分钟</span>
+                </small>
+            </p>
+        </div>
+    </div>
+</div>
+        
+        <div class="post-preview">
+    <div class="post-img" style="background-image: url('/post/link/link.png')"></div>
+    <div class="post-info">
+        <div class="post-info-center">
+            <div class="hidden-xs">
+                
+                
+                <span>/</span>
+                
+                <a class="text-gray" href="/tags/#友链"
+                    title="友链">友链</a>
+                <span>/</span>
+                
+                
+            </div>
+            <a href="/post/link.html" class="title">
+                友情链接
+            </a>
+            <p class="text-gray">
+                <small>
+                    <span>发表于2020-02-22，</span>
+                    <span class="hidden-xs">全文218字，</span>
+                    <span>阅读约1分钟</span>
+                </small>
+            </p>
+        </div>
+    </div>
+</div>
+        
+    </div>
+    <div class="col-xs-12">
+        <!-- 标签列表 -->
+        <!-- Featured Tags -->
+<style>
+    #featured-tag .post-tag-item {
+        font-size: 12px;
+        line-height: 30px;
+        display: inline-block;
+        height: 30px;
+        margin: 5px 0px;
+        padding: 0 7px;
+        color: #333;
+        border-radius: 15px;
+        background: #f6f6f6;
+    }
+
+    #featured-tag .post-tag-item:hover {
+        color: #337ab7;
+    }
+</style>
+<div id="featured-tag">
+    
+    <a class="post-tag-item" href="/tags/#关于我" title="关于我"
+        rel="3">#关于我 (3) </a>
+    
+    <a class="post-tag-item" href="/tags/#友链" title="友链"
+        rel="1">#友链 (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#c&amp;c++" title="c&amp;c++"
+        rel="1">#c&amp;c++ (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#blog" title="blog"
+        rel="5">#blog (5) </a>
+    
+    <a class="post-tag-item" href="/tags/#QA" title="QA"
+        rel="1">#QA (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#deploy" title="deploy"
+        rel="1">#deploy (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#python" title="python"
+        rel="1">#python (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#百度云" title="百度云"
+        rel="1">#百度云 (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#centos" title="centos"
+        rel="1">#centos (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#git" title="git"
+        rel="6">#git (6) </a>
+    
+    <a class="post-tag-item" href="/tags/#problem" title="problem"
+        rel="2">#problem (2) </a>
+    
+    <a class="post-tag-item" href="/tags/#c++" title="c++"
+        rel="1">#c++ (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#嵌入式" title="嵌入式"
+        rel="1">#嵌入式 (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#Linux" title="Linux"
+        rel="2">#Linux (2) </a>
+    
+    <a class="post-tag-item" href="/tags/#tools" title="tools"
+        rel="2">#tools (2) </a>
+    
+    <a class="post-tag-item" href="/tags/#commands" title="commands"
+        rel="2">#commands (2) </a>
+    
+    <a class="post-tag-item" href="/tags/#source code" title="source code"
+        rel="3">#source code (3) </a>
+    
+    <a class="post-tag-item" href="/tags/#data structure" title="data structure"
+        rel="1">#data structure (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#数据结构" title="数据结构"
+        rel="1">#数据结构 (1) </a>
+    
+</div>
+    </div>
+	
+	<div class="col-xs-12" >
+		<div class="spliter_color">
+			<p>
+		</div>
+	</div>
+    <!-- 评论 -->
+    <div class="col-xs-12">
+        
+<div id="gitalk-container"></div>
+<div id="gitalk-related"></div>
+
+<link rel="stylesheet" href="/css/gitalk.css">
+
+
+<script src="/js/gitalk.min.js"></script>
+
+<script>
+    window.addEventListener('load', function () {
+        const gitalk = new Gitalk({
+            clientID: '5b015ccee5e6a21ef92d',
+            clientSecret: '270f621778238cd7edf49f11e5b73f9b4b63dd92',
+            accessToken: '6a7b75361832239c1ef98bbeefd61e251f1a072c',
+            repo: 'wyscjm.github.io',
+            owner: 'wyscjm',
+            admin: ['wyscjm'],
+            id: window.location.pathname,
+            distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+        document.querySelector('#gitalk-container').addEventListener('click', function (e) {
+            e && e.stopPropagation && e.stopPropagation();
+        });
+    })
+</script>
+<script>
+    window.addEventListener('load', function () {
+        function render(comments) {
+            var template = '<a href="${comment.url}?utm_source=gitalk" class="dis-item-url"><h3 class="dis-item-title">${comment.title}</h3>' +
+                '<p class="dis-item-des">${comment.count} 评论 ● ${comment.date}</p>' +
+                '<div class="dis-item-content"><img class="dis-item-img" src="${comment.icon}" alt="icon"><p><b><span class="dis-item-user">${comment.user}</span></b>&nbsp;——&nbsp;${comment.body}</p></div>' +
+                '</a>'
+
+            var wrapper = get('#gitalk-related');
+            comments = shuffle(comments);
+            comments.slice(0, 4).forEach(function (c) {
+                var div = document.createElement('div');
+                div.classList.add('dis-item');
+                div.innerHTML = template.replace("${comment.url}", c.url)
+                    .replace("${comment.title}", c.title)
+                    .replace("${comment.count}", c.count)
+                    .replace("${comment.date}", c.date)
+                    .replace("${comment.icon}", c.icon)
+                    .replace("${comment.user}", c.user)
+                    .replace("${comment.body}", c.body)
+                wrapper.appendChild(div)
+            })
+            var p = document.createElement('p')
+            p.innerHTML = '<a href="https://geektutu.com/post/blog-experience-7.html" target="_blank" rel="noopener">Gitalk Plus</a>';
+            p.classList.add('dis-divide');
+            wrapper.appendChild(p);
+            wrapper.classList.add('dis-wrapper')
+        }
+        function shuffle(a) {
+            for (var i = a.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+        function get(str) { return document.querySelector(str) }
+        fetch('/tool/comments.json').then(function (r) { return r.json() }).then(render).catch(function (e) { })
+    })
+</script>
+
+    </div>
+</div>
+<aside class="float-left gkt-sidebar hidden-xs hidden-sm">
+    <div style="clear: both"></div>
+    <div class="gkt-sidebar-wrapper">
+        <section class="box-shadow"><style>
+    .gkt-summary {
+        border: 1px solid #DDDDDD;
+        border-radius: 3px;
+        padding: 5px;
+        width: 100%;
+    }
+
+
+    .gkt-summary nav {
+        overflow: hidden;
+    }
+
+    .gkt-summary nav a {
+        display: inline-block;
+        text-align: center;
+        color: #333;
+        font-size: 12px;
+    }
+
+    .gkt-summary nav span {
+        display: block;
+    }
+
+    .gkt-summary nav .middle {
+        border-left: 1px solid #eaecef;
+        border-right: 1px solid #eaecef;
+    }
+
+    .gkt-summary .number {
+        font-weight: bold;
+    }
+
+    .gkt-summary .link-list {
+        margin-top: 5px;
+        margin-bottom: -5px;
+        padding-top: 7px;
+        border-top: 1px dashed #999;
+        display: flex;
+    }
+
+    .gkt-summary .link-list a {
+        flex: 1;
+    }
+
+    .gkt-summary .link-list img {
+        width: 25px;
+        height: 25px;
+    }
+</style>
+
+<div class="gkt-summary">
+    <nav>
+        <a href="/" class="col-xs-4">
+            <number class="number">20</number><span>文章</span>
+        </a>
+        <a href="/series" class="col-xs-4 middle">
+            <number class="number">8</number><span>专题</span>
+        </a>
+        <a href="/tags" class="col-xs-4">
+            <number class="number">19</number><span>标签</span>
+        </a>
+    </nav>
+
+    
+    <div class="link-list">
+        
+        <a href="http://wwshyd.cn:8109" target="_blank" rel="noopener"><img src="/img/icon.png" /></a>
+        
+        <a href="https://github.com/wyscjm" target="_blank" rel="noopener"><img src="/img/related_links/github.png" /></a>
+        
+    </div>
+    
+</div></section>
+        
+        
+        <section class="gkt-sidebar-content box-shadow">
+            <strong>git源码分析</strong>
+            <ul>
+                
+                <li>
+                    <a href="/post/00_my/05_git_source_code/git_src_00_overview.html"
+                        class="gkt-sidebar-active">Git 源码分析00：简介及第一个commit</a>
+                    
+                    <!-- Table of Contents -->
+<div id="sidebar-toc">
+  <!-- TOC  -->
+  
+  <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#准备分析的思路"><span class="toc-nav-text">准备分析的思路</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#获取git-源码"><span class="toc-nav-text">获取git 源码</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#“梦”开始的地方"><span class="toc-nav-text">“梦”开始的地方</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#编译"><span class="toc-nav-text">编译</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#程序分析"><span class="toc-nav-text">程序分析</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#update-cache"><span class="toc-nav-text">update-cache</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#update-cache-主程序"><span class="toc-nav-text">update-cache 主程序</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#readcache-分析"><span class="toc-nav-text">readcache 分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#屏蔽冲突"><span class="toc-nav-text">屏蔽冲突</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#写入cache"><span class="toc-nav-text">写入cache</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#总结"><span class="toc-nav-text">总结</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#show-diff"><span class="toc-nav-text">show-diff</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#主程序"><span class="toc-nav-text">主程序</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#init-db"><span class="toc-nav-text">init-db</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#write-tree-read-tree-commit-tree"><span class="toc-nav-text">write-tree read-tree commit-tree</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#write-tree-read-tree"><span class="toc-nav-text">write-tree read-tree</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#commit-tree"><span class="toc-nav-text">commit-tree</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#总结-1"><span class="toc-nav-text">总结</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#cat-file"><span class="toc-nav-text">cat-file</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一些参考链接"><span class="toc-nav-text">一些参考链接</span></a></li></ol>
+  
+</div>
+
+<script>
+  (function () {
+    var h2 = document.querySelectorAll('article h2');
+    var h3 = document.querySelectorAll('article h3');
+    var linkList = document.querySelectorAll('#sidebar-toc a');
+
+    function findLinkElement(name) {
+      for (var i = 0; i < linkList.length; i++) {
+        var items = linkList[i].href.split('#');
+        if (items && items[items.length - 1] === encodeURIComponent(name)) {
+          return i;
+        }
+      }
+      return -1;
+    }
+
+    function activeLink(titleList) {
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      for (var i = titleList.length - 1; i >= 0; i--) {
+        if (scrollTop - titleList[i].offsetTop > 0) {
+          var index = findLinkElement(titleList[i].id);
+          index != -1 && linkList[index].classList.add('gkt-sidebar-active');
+          break;
+        }
+      }
+    }
+
+    window.addEventListener("scroll", function (e) {
+      [].slice.call(linkList).forEach(function (link) {
+        link.classList.remove('gkt-sidebar-active');
+      })
+      activeLink(h2);
+    })
+  })();
+</script>
+                    
+                </li>
+                
+                <li>
+                    <a href="/post/00_my/05_git_source_code/git_src_01_data_structure.html"
+                        class="">Git 源码分析01：数据结构</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="/post/00_my/05_git_source_code/git_src_02_git_v0.99.html"
+                        class="">Git 源码分析02：git v0.99版本代码</a>
+                    
+                </li>
+                
+            </ul>
+        </section>
+        
+        
+        <section class="box-shadow">
+            <strong>最近的文章</strong>
+            <ul>
+                
+                <li>
+                    <a href="/post/00_my/01_blog/myblog_04_hexo_deploy(post-receive).html">MyBlog(04) 更改网站部署方案及使用post-receive</a>
+                </li>
+                
+                <li>
+                    <a href="/post/00_my/02_daily/daily_03.html">git post-recieve 执行git失败</a>
+                </li>
+                
+                <li>
+                    <a href="/post/00_my/02_daily/daily_02.html">git post-recieve 执行git失败</a>
+                </li>
+                
+            </ul>
+        </section>
+        <section class="box-shadow text-center">
+            
+        </section>
+    </div>
+</aside>
+
+<script>
+    (function () {
+        var ele = getDom('.gkt-sidebar-content')
+        var wrapper = getDom('.gkt-sidebar-wrapper')
+        var last = 0
+        window.addEventListener("scroll", function (e) {
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var isDown = scrollTop > last;
+            var pos = getPosition(ele).y - scrollTop;
+            var downLimit = 50;
+            var upLimit = -100;
+            // uarrow.style.marginTop = scrollTop + 'px';
+            isDown && pos <= downLimit && wrapper.classList.add("gkt-sidebar-fixed");
+            !isDown && pos > upLimit && wrapper.classList.remove("gkt-sidebar-fixed");
+            last = scrollTop
+        })
+    })();
+    (function () {
+        function resizeUArrow() {
+            var s = getDom('.u-arrow-wrapper').style
+            var pc = getDom('.post-container')
+            s.left = getPosition(pc).x + 'px';
+            s.width = pc.clientWidth + 'px';
+        }
+        resizeUArrow()
+        window.addEventListener('resize', resizeUArrow);
+    })();
+</script>
+    
+</main>
+    </div>
+    <style>
+    img#go-top {
+        position: fixed;
+        bottom: 100px;
+        width: 50px;
+        cursor: pointer;
+        z-index: 9999;
+    }
+</style>
+<img id="go-top" src="/icon/top.png" class="hidden-xs" style="display: none" />
+<script>
+    (function () {
+        var goTop = document.getElementById('go-top');
+        var mainContainer = document.querySelector('.main-container');
+        
+        goTop.addEventListener('click', function () {
+            window.scroll(0, 0);
+        }, false);
+        window.addEventListener('scroll', function () {
+            var right = document.body.offsetWidth - mainContainer.getBoundingClientRect().right;
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            goTop.style.right = right + 10 + 'px'
+            scrollTop > 700 && (goTop.style.display = "block");
+            scrollTop <= 700 && (goTop.style.display = "none");
+        });
+    })();
+</script>
+    <style>
+    #geektutu-click-img-container {
+        position: fixed;
+        left: 0;
+        top: 0;
+        text-align: center;
+        width: 100%;
+        display: none;
+        z-index: 9999;
+    }
+
+    #geektutu-click-img-container img {
+        object-fit: contain;
+        background: #eaecef;
+        padding: 15px;
+        border-radius: 10px;
+        height: auto;
+        width: auto;
+        vertical-align: middle;
+    }
+</style>
+
+
+<div id="geektutu-click-img-container">
+    <img src="" alt="Big Image">
+</div>
+
+<script>
+    (function () {
+        var container = document.querySelector('#geektutu-click-img-container')
+        var targetImg = container.querySelector('img')
+        var imgs = document.querySelectorAll('article img');
+        targetImg.addEventListener('click', function (e) {
+            container.style.display = 'none';
+            e && e.stopPropagation && e.stopPropagation();
+        }, false);
+
+        for (var i = 0; i < imgs.length; ++i) {
+            var img = imgs[i];
+            img.addEventListener('click', (function (src, rate) {
+                return function (e) {
+                    e && e.stopPropagation && e.stopPropagation();
+                    if (window.innerWidth < 980) {
+                        return
+                    }
+                    targetImg.style.height = targetImg.style.width = 'auto';
+                    if (window.innerWidth / window.innerHeight > rate) {
+                        targetImg.style.height = (window.innerHeight - 20) + 'px';
+                    } else {
+                        targetImg.style.width = (window.innerWidth - 20) + 'px';
+                    }
+                    container.style.height = window.innerHeight + 'px'
+                    container.style.lineHeight = window.innerHeight + 'px'
+                    container.style.display = 'block';
+                    targetImg.src = src;
+                };
+            }(img.src, img.width / img.height)), false)
+        }
+    })();
+</script>
+    <!-- Footer -->
+    <!-- Footer -->
+<style>
+    footer {
+        width: 100%;
+        line-height: 1.5;
+        padding: 20px;
+    }
+
+    footer a {
+        color: #333;
+        text-decoration: none;
+    }
+
+    .footer-hexo img {
+        height: 20px;
+        margin-bottom: -5px;
+    }
+
+    .footer-hexo a {
+        color: #337ab7;
+    }
+</style>
+<footer class="text-center col-xs-12">
+    <p>
+        <small>© 2020 - wyscjm - </small>
+        <small>
+            <a target="_blank" rel="nofollow noopener" href="http://www.miitbeian.gov.cn/">皖ICP备15024684号-1</a>
+        </small>
+    </p>
+    <p class="footer-hexo">
+        <!-- 但若直接使用或修改主题，请务必保留这段声明 -->
+        <small>Powered by <a target="_blank" href="https://hexo.io">Hexo</a> | Theme
+            <a target="_blank" href="https://geektutu.com">Geektutu</a>
+            <a href="https://github.com/geektutu/hexo-theme-geektutu" target="_blank" rel="noopener">
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACIAUAMBIgACEQEDEQH/xAAcAAABBAMBAAAAAAAAAAAAAAAAAQQFBwIDBgj/2gAIAQEAAAAA9KrHSgAYL5/z6zZGuJd12uugbhq3uKtmuRtix20IS7lTLAfAAAn/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oACAECEAAAAAAB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAgBAxAAAAAAAf/EADEQAAICAQIEBQEGBwAAAAAAAAECAwQFAAYREhORBxQhUlQxQVFic5KxJDJCYYGC0f/aAAgBAQABPwCFHnjWUzuvN6hV4cANSRLGjO9yRVUcSzMoA7jVXJYe5N0a2dhmk9kc0bN2GvLN8mbuNeWb5M3ca8s3yZu415Y/Jm7jXlm+TN3H/NeVPyZu40vOk3TZywK8wJ+v3EHVM/wsI/Dq2lrxN3Nnca16eti8chSAIoMbzByhMwP14kHVfwIiSaF5c96J6kwwCOTnHsYk8uvCrdmQy1TI4rJuz3cZLyGR/wCd4+YoOf8AEpUjXitubLYPG4paFsUxcuiGe7yc5gTW3LW44szXmobsi3Dhmic2+Z4+vCVH9CpraPiQ+QvbgTJrPFBWd5YpWrmNIIEXiRO32Pqt4p7cnfHk18lFBdmEVW1LVdIZGOrniTt6plrWKaO69yCykDRxwF+LMAewB0Txtr+Sf31VI8tEPw62fZt7N3Humtbpzz13ucX6CGSWMSuzpLyD1eNgeUka3PuvHbaxq3biTMHfkiSNCS78CwU+3Xg7Vu3MhuTcU6cq3Zemn3Eh2dv8Lzcut+29x1atKbHYqLJUhLwyNMwiZ3j9yDWOxUOV3tgb+3No5LDx1pi9+aeIwRlNY6bc+Jv+IFGrhLxtXJZ7VKcw81diiAAEn0JOrkWZyNfbEr0tz27UGQgkuGzXdIIvyowq99bRxk9ffO/L81SZBPZgEEroQroIxxMZOgeNsfkn99QypHGqO4Vl9CDrN4LDZkwyzyyQ2IgRHZrzGCZVP1XnQglT9oOtw4LC7iqV6uRkZoYpxKFSQpzFRw4EjVRMfSrQ1qqwxQxKFjjTgFUD7BoWYR6iVe+mtxt9Zwf9teaj4AdccPu5tedX5A/VrzUR+sy/q1CwksF19VEfDj/cnQRW+qg66cfsXtrpx+xe2unH7F7a6cfsXtrpx+xe2unH7F7a6cfsXtoxx+xe2gAAOA1//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAgEBPwB//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAwEBPwB//9k="
+                    alt="Github Star">
+            </a>
+        </small>
+    </p>
+    <p class="footer-hexo">
+            <small>About me: <a target="_blank" href="https://wyscjm.github.io/">WYSCJM</a> | Theme
+            <a href="https://github.com/" target="_blank" rel="noopener">
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACIAUAMBIgACEQEDEQH/xAAcAAABBAMBAAAAAAAAAAAAAAAAAQQFBwIDBgj/2gAIAQEAAAAA9KrHSgAYL5/z6zZGuJd12uugbhq3uKtmuRtix20IS7lTLAfAAAn/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oACAECEAAAAAAB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAgBAxAAAAAAAf/EADEQAAICAQIEBQEGBwAAAAAAAAECAwQFAAYREhORBxQhUlQxQVFic5KxJDJCYYGC0f/aAAgBAQABPwCFHnjWUzuvN6hV4cANSRLGjO9yRVUcSzMoA7jVXJYe5N0a2dhmk9kc0bN2GvLN8mbuNeWb5M3ca8s3yZu415Y/Jm7jXlm+TN3H/NeVPyZu40vOk3TZywK8wJ+v3EHVM/wsI/Dq2lrxN3Nnca16eti8chSAIoMbzByhMwP14kHVfwIiSaF5c96J6kwwCOTnHsYk8uvCrdmQy1TI4rJuz3cZLyGR/wCd4+YoOf8AEpUjXitubLYPG4paFsUxcuiGe7yc5gTW3LW44szXmobsi3Dhmic2+Z4+vCVH9CpraPiQ+QvbgTJrPFBWd5YpWrmNIIEXiRO32Pqt4p7cnfHk18lFBdmEVW1LVdIZGOrniTt6plrWKaO69yCykDRxwF+LMAewB0Txtr+Sf31VI8tEPw62fZt7N3Humtbpzz13ucX6CGSWMSuzpLyD1eNgeUka3PuvHbaxq3biTMHfkiSNCS78CwU+3Xg7Vu3MhuTcU6cq3Zemn3Eh2dv8Lzcut+29x1atKbHYqLJUhLwyNMwiZ3j9yDWOxUOV3tgb+3No5LDx1pi9+aeIwRlNY6bc+Jv+IFGrhLxtXJZ7VKcw81diiAAEn0JOrkWZyNfbEr0tz27UGQgkuGzXdIIvyowq99bRxk9ffO/L81SZBPZgEEroQroIxxMZOgeNsfkn99QypHGqO4Vl9CDrN4LDZkwyzyyQ2IgRHZrzGCZVP1XnQglT9oOtw4LC7iqV6uRkZoYpxKFSQpzFRw4EjVRMfSrQ1qqwxQxKFjjTgFUD7BoWYR6iVe+mtxt9Zwf9teaj4AdccPu5tedX5A/VrzUR+sy/q1CwksF19VEfDj/cnQRW+qg66cfsXtrpx+xe2unH7F7a6cfsXtrpx+xe2unH7F7a6cfsXtoxx+xe2gAAOA1//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAgEBPwB//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAwEBPwB//9k="
+                    alt="Github Star">
+            </a>
+        </small>
+     </p>
+    
+    
+    
+    <p>
+        <small>
+            <span id="busuanzi_container_site_pv">👁本站总访问量<span id="busuanzi_value_site_pv"></span></span> &nbsp;
+            <span id="busuanzi_container_page_pv">📚本文总阅读量<span id="busuanzi_value_page_pv"></span></span>
+        </small>
+    </p>
+    
+    
+
+</footer>
+
+
+<script>
+    window.addEventListener('load', function () {
+        globalAddScript('//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js');
+    })
+</script>
+
+<!-- Baidu Tongji -->
+
+<script>
+    window.addEventListener('load', function () {
+        var _hmt = _hmt || [];
+        globalAddScript('//hm.baidu.com/hm.js?04e7599a2fddbd1d4de46012dc623458')
+    })
+</script>
+
+
+
+<!-- baidu auto push for seo -->
+<script>
+    window.addEventListener('load', function () {
+        var src = 'http://push.zhanzhang.baidu.com/push.js'
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        globalAddScript(src);
+    })
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-143181088-1');
+
+    window.addEventListener('load', function () {
+        globalAddScript('https://www.googletagmanager.com/gtag/js?id=UA-143181088-1');
+    });
+</script>
+
+
+    <script>
+        // 非本站网址，新开tab页签
+        (function () {
+            var stopBubble = function (e) {
+                e && e.stopPropagation && e.stopPropagation();
+            }
+            var links = document.querySelectorAll('a');
+            [].slice.call(links).forEach(function (item) {
+                if (item.href && item.href.indexOf(window.location.host) === -1) {
+                    item.target = '_blank'
+                }
+                // 阻止冒泡，不触发彩蛋。
+                item.addEventListener('click', stopBubble, false);
+            });
+            var article = document.querySelector('article');
+            article && article.addEventListener('click', stopBubble, false)
+        })();
+    </script>
+    
+<script>
+    (function (window, document, undefined) {
+        var hearts = [];
+        var keywords = ["点个赞", "留个言", "赞赏一下", "冬天里太阳", "wyscjm.github.io"];
+        function randomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+        window.addEventListener('click', createWord)
+
+        function createWord(e) {
+            var d = document.createElement("span");
+            d.style.position = 'fixed';
+            d.style.zIndex = 9999;
+            d.style.color = 'rgb(' + [randomInt(255), randomInt(255), randomInt(255)].join(',') + ')';
+            d.innerHTML = keywords[randomInt(keywords.length)];
+            d.onselectstart = function () { return false; }
+
+            hearts.push({ el: d, x: e.clientX - 5, y: e.clientY - 5, alpha: 1, scale: 1 });
+            document.body.appendChild(d);
+        }
+        (function gameloop() {
+            for (var i = 0; i < hearts.length; i++) {
+                heart = hearts[i];
+                if (heart.alpha <= 0) {
+                    document.body.removeChild(heart.el);
+                    hearts.splice(i, 1);
+                    continue;
+                }
+                heart.y -= heart.alpha < 0.5 ? 2 : 1;
+                heart.scale += 0.002;
+                heart.alpha -= 0.013;
+                heart.el.style.transform = 'scale(' + heart.scale + ')';
+                heart.el.style.left = heart.x + 'px';
+                heart.el.style.top = heart.y + 'px';
+            }
+            setTimeout(gameloop, 10)
+        })();
+    })(window, document);
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <meta name="baidu-site-verification" content="" />
+  <meta name="google-site-verification" content="" />
+  <meta name="msvalidate.01" content="" />
+  <meta name="360-site-verification" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- if page has tags, then add tags to keyword -->
+  
+  
+  <meta name="keywords" content=",">
+  <!-- page.description has higher priority -->
+  <meta name="description" content="WYSCJM的博客">
+  <link rel="shortcut icon" href="/img/icon.png">
+  <title>
+    
+    冬天里太阳
+    
+  </title>
+
+  <link rel="canonical" href="/tags/c/">
+  
+<link rel="stylesheet" href="/css/reset.css">
+
+  
+<link rel="stylesheet" href="/css/layout.css">
+
+  
+<link rel="stylesheet" href="/css/markdown.css">
+
+  <!-- Pygments Highlight CSS -->
+  
+<link rel="stylesheet" href="/css/highlight.css">
+
+  
+<link rel="stylesheet" href="/css/geektutu.css">
+
+  <!-- global function -->
+  <script>
+    window.globalAddScript = function (url, onload, onerror) {
+      var s = document.createElement('script');
+      s.src = url;
+      onload && (s.onload = onload);
+      onerror && (s.onerror = onerror);
+      document.body.appendChild(s);
+    }
+    window.globalAddCss = function (url) {
+      var s = document.createElement('link');
+      s.rel = 'stylesheet';
+      s.href = url;
+      document.body.appendChild(s);
+    }
+    window.getPosition = function (ele) {
+      var x = 0, y = 0;
+      while (ele) {
+        x += (ele.offsetLeft - ele.scrollLeft + ele.clientLeft);
+        y += (ele.offsetTop - ele.scrollTop + ele.clientTop);
+        ele = ele.offsetParent;
+      }
+      return { x: x, y: y };
+    }
+    window.getDom = function (str) { return document.querySelector(str) }
+  </script>
+  <!-- google ad -->
+  
+  <script>
+    window.addEventListener('load', function () {
+      globalAddScript("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", "", function (e) {
+        if (window.localStorage.getItem('gkt_marker')) {
+          var rec = document.querySelector('.gkt-rec-links');
+          rec && (rec.style.display = 'none');
+        }
+      });
+    });
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1324785265982253",
+      enable_page_level_ads: true
+    });
+  </script>
+  
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <header class="gkt-header col-xs-12 padding-0">
+    <div id="gkt-nav" class="gkt-header-container">
+        <a href="/" class="gkt-header-title float-left">
+            <img class="float-left" src="/img/icon.png" alt="">
+            <span>冬天里太阳</span>
+        </a>
+        <nav class="gkt-header-nav text-right">
+            <ul>
+                <li><a class="hidden-xs" href="/">主页</a></li>
+                <li><a href="/series/">专题</a></li>
+                <li><a href="/archives/">归档</a></li>
+                <li><a href="/box/">百宝箱</a></li>
+                <li><a href="/box_me/">我的百宝箱</a></li>
+                <li><a href="/post/link.html">友链</a></li>
+                <li><a href="/post/about.html">留言</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="gkt-cate-nav" class="gkt-header-container hidden-xs">
+        
+        <nav class="gkt-header-nav float-left">
+            <ul>
+                
+                
+                <li class="gkt-cate-name float-left ">
+                    <a class="float-left" href="/post/00_my/00_my.html">MyXXX ▾</a>
+                    
+                    <ul class="gkt-sub-cate">
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/00_my.html">MyXXX简介</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/01_blog/myblog_00_introduction.html">个人博客搭建</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/02_daily/daily_00.html">日常记录</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/04_linux_tools&amp;commands/tool&amp;cmd_00_overview.html">Linux工具及命令</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/03_embeded_c++/ebc_00_overview.html">嵌入式C++学习</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/00_my/05_git_source_code/git_src_00_overview.html">git源码分析</a></li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="gkt-cate-name float-left ">
+                    <a class="float-left" href="/post/01_gd/gd_00.html">好文赏析 ▾</a>
+                    
+                    <ul class="gkt-sub-cate">
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/01_gd/gd_00.html">好文赏析系列简介</a></li>
+                        
+                        <li class="gkt-sub-cate-name "><a class="float-left"
+                                href="/post/01_gd/gd_01.html">c&amp;c++</a></li>
+                        
+                    </ul>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+<div style="height: 44px"></div>
+<div class="hidden-xs" style="height: 44px"></div>
+<script>
+    (function () {
+        window.addEventListener('scroll', function () {
+            if (window.innerWidth < 768) {
+                return;
+            }
+            var nav = document.querySelector('#gkt-nav');
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            scrollTop > 50 && (nav.classList.add('hide'));
+            scrollTop <= 50 && (nav.classList.remove('hide'));
+        });
+        var cateNavs = document.querySelectorAll('#gkt-cate-nav>nav>ul>li');
+        [].slice.call(cateNavs).forEach(function (item) {
+            var sub = item.querySelector('.gkt-sub-cate');
+            if (!sub) return;
+            item.addEventListener('mouseenter', function (e) { sub.style.display = 'block'; }, false);
+            item.addEventListener('mouseleave', function (e) { sub.style.display = 'none'; }, false);
+        })
+    })();
+</script>
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Main Content -->
+<main class="col-xs-12 padding-0 markdown-it">
+    <!-- Post Container -->
+    
+    <style>
+        @media (min-width: 1200px) {
+            .main-container {
+                width: 1000px !important;
+            }
+        }
+
+        #gkt-index-sidebar {
+            border-left: 1px solid #eaecef;
+        }
+
+        #gkt-index-sidebar section {
+            margin-bottom: 8px;
+            padding: 10px;
+        }
+
+        .index-container {
+            padding: 20px;
+        }
+    </style>
+    <div class="col-xs-12 padding-0">
+        <div class="col-xs-12 col-md-8 bg-white index-container box-shadow">
+            
+<!-- Main Content -->
+<div class="post-list">
+    
+
+    <!-- 归档列表 -->
+    <ul>
+        
+        <li class="post-item-parent post-item-color-0">
+            <a href="/archives/#2020" class="post-text-parent" id="2020">
+                2020
+            </a>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/01_blog/myblog_04_hexo_deploy(post-receive).html">MyBlog(04) 更改网站部署方案及使用post-receive</a>
+            <span class="post-item-date">(Mar 28, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/02_daily/daily_03.html">git post-recieve 执行git失败</a>
+            <span class="post-item-date">(Mar 28, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/02_daily/daily_02.html">git post-recieve 执行git失败</a>
+            <span class="post-item-date">(Mar 28, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/02_daily/daily_01.html">git error:insufficient permission for adding an object to repository database ./object 解决办法</a>
+            <span class="post-item-date">(Mar 27, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/05_git_source_code/git_src_02_git_v0.99.html">Git 源码分析02：git v0.99版本代码</a>
+            <span class="post-item-date">(Mar 27, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/05_git_source_code/git_src_01_data_structure.html">Git 源码分析01：数据结构</a>
+            <span class="post-item-date">(Mar 26, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/05_git_source_code/git_src_00_overview.html">Git 源码分析00：简介及第一个commit</a>
+            <span class="post-item-date">(Mar 25, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/03_embeded_c++/ebc_00_overview.html">嵌入式C++学习 简介</a>
+            <span class="post-item-date">(Mar 19, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/01_blog/myblog_03_busuanzi.html">MyBlog(03) 什么是busuanzi，不蒜子介绍</a>
+            <span class="post-item-date">(Feb 24, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/04_linux_tools&commands/tool&cmd_01_Tmux.html">Tmux学习及使用</a>
+            <span class="post-item-date">(Feb 23, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/04_linux_tools&commands/tool&cmd_00_overview.html">Linux下的工具和命令</a>
+            <span class="post-item-date">(Feb 23, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/02_daily/daily_00.html">Centos7下下载并安装百度云bypy</a>
+            <span class="post-item-date">(Feb 23, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/01_blog/myblog_02_problem_cn_quotes.html">MyBlog(02) 问题：英文的引号显示成中文了</a>
+            <span class="post-item-date">(Feb 23, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/01_gd/gd_01.html">How to write a good C main function</a>
+            <span class="post-item-date">(Feb 22, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/01_gd/gd_00.html">好文赏析系列 简介</a>
+            <span class="post-item-date">(Feb 22, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/about.html">留言板</a>
+            <span class="post-item-date">(Feb 22, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/01_blog/myblog_01_hexo_github_pages.html">MyBlog(01) Hexo+Github博客教程</a>
+            <span class="post-item-date">(Feb 22, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/01_blog/myblog_00_introduction.html">MyBlog(00) 简短的介绍</a>
+            <span class="post-item-date">(Feb 22, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/link.html">友情链接</a>
+            <span class="post-item-date">(Feb 22, 2020)</span>
+        </li>
+        
+        <li>
+            <a class="post-item-title" href="/post/00_my/00_my.html">MyXXX 简介</a>
+            <span class="post-item-date">(Feb 21, 2020)</span>
+        </li>
+        
+        
+    </ul>
+</div>
+        </div>
+        <div id="gkt-index-sidebar" class="hidden-xs hidden-sm col-md-4">
+            <section class="bg-white box-shadow"><style>
+    .gkt-summary {
+        border: 1px solid #DDDDDD;
+        border-radius: 3px;
+        padding: 5px;
+        width: 100%;
+    }
+
+
+    .gkt-summary nav {
+        overflow: hidden;
+    }
+
+    .gkt-summary nav a {
+        display: inline-block;
+        text-align: center;
+        color: #333;
+        font-size: 12px;
+    }
+
+    .gkt-summary nav span {
+        display: block;
+    }
+
+    .gkt-summary nav .middle {
+        border-left: 1px solid #eaecef;
+        border-right: 1px solid #eaecef;
+    }
+
+    .gkt-summary .number {
+        font-weight: bold;
+    }
+
+    .gkt-summary .link-list {
+        margin-top: 5px;
+        margin-bottom: -5px;
+        padding-top: 7px;
+        border-top: 1px dashed #999;
+        display: flex;
+    }
+
+    .gkt-summary .link-list a {
+        flex: 1;
+    }
+
+    .gkt-summary .link-list img {
+        width: 25px;
+        height: 25px;
+    }
+</style>
+
+<div class="gkt-summary">
+    <nav>
+        <a href="/" class="col-xs-4">
+            <number class="number">20</number><span>文章</span>
+        </a>
+        <a href="/series" class="col-xs-4 middle">
+            <number class="number">8</number><span>专题</span>
+        </a>
+        <a href="/tags" class="col-xs-4">
+            <number class="number">19</number><span>标签</span>
+        </a>
+    </nav>
+
+    
+    <div class="link-list">
+        
+        <a href="http://wwshyd.cn:8109" target="_blank" rel="noopener"><img src="/img/icon.png" /></a>
+        
+        <a href="https://github.com/wyscjm" target="_blank" rel="noopener"><img src="/img/related_links/github.png" /></a>
+        
+    </div>
+    
+</div></section>
+            <section class="bg-white box-shadow"><!-- Featured Tags -->
+<style>
+    #featured-tag .post-tag-item {
+        font-size: 12px;
+        line-height: 30px;
+        display: inline-block;
+        height: 30px;
+        margin: 5px 0px;
+        padding: 0 7px;
+        color: #333;
+        border-radius: 15px;
+        background: #f6f6f6;
+    }
+
+    #featured-tag .post-tag-item:hover {
+        color: #337ab7;
+    }
+</style>
+<div id="featured-tag">
+    
+    <a class="post-tag-item" href="/tags/#关于我" title="关于我"
+        rel="3">#关于我 (3) </a>
+    
+    <a class="post-tag-item" href="/tags/#友链" title="友链"
+        rel="1">#友链 (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#c&amp;c++" title="c&amp;c++"
+        rel="1">#c&amp;c++ (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#blog" title="blog"
+        rel="5">#blog (5) </a>
+    
+    <a class="post-tag-item" href="/tags/#QA" title="QA"
+        rel="1">#QA (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#deploy" title="deploy"
+        rel="1">#deploy (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#python" title="python"
+        rel="1">#python (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#百度云" title="百度云"
+        rel="1">#百度云 (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#centos" title="centos"
+        rel="1">#centos (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#git" title="git"
+        rel="6">#git (6) </a>
+    
+    <a class="post-tag-item" href="/tags/#problem" title="problem"
+        rel="2">#problem (2) </a>
+    
+    <a class="post-tag-item" href="/tags/#c++" title="c++"
+        rel="1">#c++ (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#嵌入式" title="嵌入式"
+        rel="1">#嵌入式 (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#Linux" title="Linux"
+        rel="2">#Linux (2) </a>
+    
+    <a class="post-tag-item" href="/tags/#tools" title="tools"
+        rel="2">#tools (2) </a>
+    
+    <a class="post-tag-item" href="/tags/#commands" title="commands"
+        rel="2">#commands (2) </a>
+    
+    <a class="post-tag-item" href="/tags/#source code" title="source code"
+        rel="3">#source code (3) </a>
+    
+    <a class="post-tag-item" href="/tags/#data structure" title="data structure"
+        rel="1">#data structure (1) </a>
+    
+    <a class="post-tag-item" href="/tags/#数据结构" title="数据结构"
+        rel="1">#数据结构 (1) </a>
+    
+</div></section>
+            <section class="bg-white box-shadow text-center">
+                
+            </section>
+        </div>
+    </div>
+    
+</main>
+    </div>
+    <style>
+    img#go-top {
+        position: fixed;
+        bottom: 100px;
+        width: 50px;
+        cursor: pointer;
+        z-index: 9999;
+    }
+</style>
+<img id="go-top" src="/icon/top.png" class="hidden-xs" style="display: none" />
+<script>
+    (function () {
+        var goTop = document.getElementById('go-top');
+        var mainContainer = document.querySelector('.main-container');
+        
+        goTop.addEventListener('click', function () {
+            window.scroll(0, 0);
+        }, false);
+        window.addEventListener('scroll', function () {
+            var right = document.body.offsetWidth - mainContainer.getBoundingClientRect().right;
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            goTop.style.right = right + 10 + 'px'
+            scrollTop > 700 && (goTop.style.display = "block");
+            scrollTop <= 700 && (goTop.style.display = "none");
+        });
+    })();
+</script>
+    <style>
+    #geektutu-click-img-container {
+        position: fixed;
+        left: 0;
+        top: 0;
+        text-align: center;
+        width: 100%;
+        display: none;
+        z-index: 9999;
+    }
+
+    #geektutu-click-img-container img {
+        object-fit: contain;
+        background: #eaecef;
+        padding: 15px;
+        border-radius: 10px;
+        height: auto;
+        width: auto;
+        vertical-align: middle;
+    }
+</style>
+
+
+<div id="geektutu-click-img-container">
+    <img src="" alt="Big Image">
+</div>
+
+<script>
+    (function () {
+        var container = document.querySelector('#geektutu-click-img-container')
+        var targetImg = container.querySelector('img')
+        var imgs = document.querySelectorAll('article img');
+        targetImg.addEventListener('click', function (e) {
+            container.style.display = 'none';
+            e && e.stopPropagation && e.stopPropagation();
+        }, false);
+
+        for (var i = 0; i < imgs.length; ++i) {
+            var img = imgs[i];
+            img.addEventListener('click', (function (src, rate) {
+                return function (e) {
+                    e && e.stopPropagation && e.stopPropagation();
+                    if (window.innerWidth < 980) {
+                        return
+                    }
+                    targetImg.style.height = targetImg.style.width = 'auto';
+                    if (window.innerWidth / window.innerHeight > rate) {
+                        targetImg.style.height = (window.innerHeight - 20) + 'px';
+                    } else {
+                        targetImg.style.width = (window.innerWidth - 20) + 'px';
+                    }
+                    container.style.height = window.innerHeight + 'px'
+                    container.style.lineHeight = window.innerHeight + 'px'
+                    container.style.display = 'block';
+                    targetImg.src = src;
+                };
+            }(img.src, img.width / img.height)), false)
+        }
+    })();
+</script>
+    <!-- Footer -->
+    <!-- Footer -->
+<style>
+    footer {
+        width: 100%;
+        line-height: 1.5;
+        padding: 20px;
+    }
+
+    footer a {
+        color: #333;
+        text-decoration: none;
+    }
+
+    .footer-hexo img {
+        height: 20px;
+        margin-bottom: -5px;
+    }
+
+    .footer-hexo a {
+        color: #337ab7;
+    }
+</style>
+<footer class="text-center col-xs-12">
+    <p>
+        <small>© 2020 - wyscjm - </small>
+        <small>
+            <a target="_blank" rel="nofollow noopener" href="http://www.miitbeian.gov.cn/">皖ICP备15024684号-1</a>
+        </small>
+    </p>
+    <p class="footer-hexo">
+        <!-- 但若直接使用或修改主题，请务必保留这段声明 -->
+        <small>Powered by <a target="_blank" href="https://hexo.io">Hexo</a> | Theme
+            <a target="_blank" href="https://geektutu.com">Geektutu</a>
+            <a href="https://github.com/geektutu/hexo-theme-geektutu" target="_blank" rel="noopener">
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACIAUAMBIgACEQEDEQH/xAAcAAABBAMBAAAAAAAAAAAAAAAAAQQFBwIDBgj/2gAIAQEAAAAA9KrHSgAYL5/z6zZGuJd12uugbhq3uKtmuRtix20IS7lTLAfAAAn/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oACAECEAAAAAAB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAgBAxAAAAAAAf/EADEQAAICAQIEBQEGBwAAAAAAAAECAwQFAAYREhORBxQhUlQxQVFic5KxJDJCYYGC0f/aAAgBAQABPwCFHnjWUzuvN6hV4cANSRLGjO9yRVUcSzMoA7jVXJYe5N0a2dhmk9kc0bN2GvLN8mbuNeWb5M3ca8s3yZu415Y/Jm7jXlm+TN3H/NeVPyZu40vOk3TZywK8wJ+v3EHVM/wsI/Dq2lrxN3Nnca16eti8chSAIoMbzByhMwP14kHVfwIiSaF5c96J6kwwCOTnHsYk8uvCrdmQy1TI4rJuz3cZLyGR/wCd4+YoOf8AEpUjXitubLYPG4paFsUxcuiGe7yc5gTW3LW44szXmobsi3Dhmic2+Z4+vCVH9CpraPiQ+QvbgTJrPFBWd5YpWrmNIIEXiRO32Pqt4p7cnfHk18lFBdmEVW1LVdIZGOrniTt6plrWKaO69yCykDRxwF+LMAewB0Txtr+Sf31VI8tEPw62fZt7N3Humtbpzz13ucX6CGSWMSuzpLyD1eNgeUka3PuvHbaxq3biTMHfkiSNCS78CwU+3Xg7Vu3MhuTcU6cq3Zemn3Eh2dv8Lzcut+29x1atKbHYqLJUhLwyNMwiZ3j9yDWOxUOV3tgb+3No5LDx1pi9+aeIwRlNY6bc+Jv+IFGrhLxtXJZ7VKcw81diiAAEn0JOrkWZyNfbEr0tz27UGQgkuGzXdIIvyowq99bRxk9ffO/L81SZBPZgEEroQroIxxMZOgeNsfkn99QypHGqO4Vl9CDrN4LDZkwyzyyQ2IgRHZrzGCZVP1XnQglT9oOtw4LC7iqV6uRkZoYpxKFSQpzFRw4EjVRMfSrQ1qqwxQxKFjjTgFUD7BoWYR6iVe+mtxt9Zwf9teaj4AdccPu5tedX5A/VrzUR+sy/q1CwksF19VEfDj/cnQRW+qg66cfsXtrpx+xe2unH7F7a6cfsXtrpx+xe2unH7F7a6cfsXtoxx+xe2gAAOA1//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAgEBPwB//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAwEBPwB//9k="
+                    alt="Github Star">
+            </a>
+        </small>
+    </p>
+    <p class="footer-hexo">
+            <small>About me: <a target="_blank" href="https://wyscjm.github.io/">WYSCJM</a> | Theme
+            <a href="https://github.com/" target="_blank" rel="noopener">
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIACIAUAMBIgACEQEDEQH/xAAcAAABBAMBAAAAAAAAAAAAAAAAAQQFBwIDBgj/2gAIAQEAAAAA9KrHSgAYL5/z6zZGuJd12uugbhq3uKtmuRtix20IS7lTLAfAAAn/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oACAECEAAAAAAB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAgBAxAAAAAAAf/EADEQAAICAQIEBQEGBwAAAAAAAAECAwQFAAYREhORBxQhUlQxQVFic5KxJDJCYYGC0f/aAAgBAQABPwCFHnjWUzuvN6hV4cANSRLGjO9yRVUcSzMoA7jVXJYe5N0a2dhmk9kc0bN2GvLN8mbuNeWb5M3ca8s3yZu415Y/Jm7jXlm+TN3H/NeVPyZu40vOk3TZywK8wJ+v3EHVM/wsI/Dq2lrxN3Nnca16eti8chSAIoMbzByhMwP14kHVfwIiSaF5c96J6kwwCOTnHsYk8uvCrdmQy1TI4rJuz3cZLyGR/wCd4+YoOf8AEpUjXitubLYPG4paFsUxcuiGe7yc5gTW3LW44szXmobsi3Dhmic2+Z4+vCVH9CpraPiQ+QvbgTJrPFBWd5YpWrmNIIEXiRO32Pqt4p7cnfHk18lFBdmEVW1LVdIZGOrniTt6plrWKaO69yCykDRxwF+LMAewB0Txtr+Sf31VI8tEPw62fZt7N3Humtbpzz13ucX6CGSWMSuzpLyD1eNgeUka3PuvHbaxq3biTMHfkiSNCS78CwU+3Xg7Vu3MhuTcU6cq3Zemn3Eh2dv8Lzcut+29x1atKbHYqLJUhLwyNMwiZ3j9yDWOxUOV3tgb+3No5LDx1pi9+aeIwRlNY6bc+Jv+IFGrhLxtXJZ7VKcw81diiAAEn0JOrkWZyNfbEr0tz27UGQgkuGzXdIIvyowq99bRxk9ffO/L81SZBPZgEEroQroIxxMZOgeNsfkn99QypHGqO4Vl9CDrN4LDZkwyzyyQ2IgRHZrzGCZVP1XnQglT9oOtw4LC7iqV6uRkZoYpxKFSQpzFRw4EjVRMfSrQ1qqwxQxKFjjTgFUD7BoWYR6iVe+mtxt9Zwf9teaj4AdccPu5tedX5A/VrzUR+sy/q1CwksF19VEfDj/cnQRW+qg66cfsXtrpx+xe2unH7F7a6cfsXtrpx+xe2unH7F7a6cfsXtoxx+xe2gAAOA1//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAgEBPwB//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAwEBPwB//9k="
+                    alt="Github Star">
+            </a>
+        </small>
+     </p>
+    
+    
+    
+    <p>
+        <small>
+            <span id="busuanzi_container_site_pv">👁本站总访问量<span id="busuanzi_value_site_pv"></span></span> &nbsp;
+            <span id="busuanzi_container_page_pv">📚本文总阅读量<span id="busuanzi_value_page_pv"></span></span>
+        </small>
+    </p>
+    
+    
+
+</footer>
+
+
+<script>
+    window.addEventListener('load', function () {
+        globalAddScript('//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js');
+    })
+</script>
+
+<!-- Baidu Tongji -->
+
+<script>
+    window.addEventListener('load', function () {
+        var _hmt = _hmt || [];
+        globalAddScript('//hm.baidu.com/hm.js?04e7599a2fddbd1d4de46012dc623458')
+    })
+</script>
+
+
+
+<!-- baidu auto push for seo -->
+<script>
+    window.addEventListener('load', function () {
+        var src = 'http://push.zhanzhang.baidu.com/push.js'
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        globalAddScript(src);
+    })
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-143181088-1');
+
+    window.addEventListener('load', function () {
+        globalAddScript('https://www.googletagmanager.com/gtag/js?id=UA-143181088-1');
+    });
+</script>
+
+
+    <script>
+        // 非本站网址，新开tab页签
+        (function () {
+            var stopBubble = function (e) {
+                e && e.stopPropagation && e.stopPropagation();
+            }
+            var links = document.querySelectorAll('a');
+            [].slice.call(links).forEach(function (item) {
+                if (item.href && item.href.indexOf(window.location.host) === -1) {
+                    item.target = '_blank'
+                }
+                // 阻止冒泡，不触发彩蛋。
+                item.addEventListener('click', stopBubble, false);
+            });
+            var article = document.querySelector('article');
+            article && article.addEventListener('click', stopBubble, false)
+        })();
+    </script>
+    
+<script>
+    (function (window, document, undefined) {
+        var hearts = [];
+        var keywords = ["点个赞", "留个言", "赞赏一下", "冬天里太阳", "wyscjm.github.io"];
+        function randomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+        window.addEventListener('click', createWord)
+
+        function createWord(e) {
+            var d = document.createElement("span");
+            d.style.position = 'fixed';
+            d.style.zIndex = 9999;
+            d.style.color = 'rgb(' + [randomInt(255), randomInt(255), randomInt(255)].join(',') + ')';
+            d.innerHTML = keywords[randomInt(keywords.length)];
+            d.onselectstart = function () { return false; }
+
+            hearts.push({ el: d, x: e.clientX - 5, y: e.clientY - 5, alpha: 1, scale: 1 });
+            document.body.appendChild(d);
+        }
+        (function gameloop() {
+            for (var i = 0; i < hearts.length; i++) {
+                heart = hearts[i];
+                if (heart.alpha <= 0) {
+                    document.body.removeChild(heart.el);
+                    hearts.splice(i, 1);
+                    continue;
+                }
+                heart.y -= heart.alpha < 0.5 ? 2 : 1;
+                heart.scale += 0.002;
+                heart.alpha -= 0.013;
+                heart.el.style.transform = 'scale(' + heart.scale + ')';
+                heart.el.style.left = heart.x + 'px';
+                heart.el.style.top = heart.y + 'px';
+            }
+            setTimeout(gameloop, 10)
+        })();
+    })(window, document);
+</script>
+
+</body>
+
+</html>
