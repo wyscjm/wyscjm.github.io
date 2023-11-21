@@ -1,0 +1,1 @@
+import{_ as t,o,c as s,a as e,b as a}from"./app-R41TPMhQ.js";const c={},n=e("h1",{id:"hello",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#hello","aria-hidden":"true"},"#"),a(" Hello")],-1),r=e("p",null,"VuePress",-1),l=[n,r];function _(d,i){return o(),s("div",null,l)}const f=t(c,[["render",_],["__file","index.html.vue"]]);export{f as default};
